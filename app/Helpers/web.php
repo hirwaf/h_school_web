@@ -26,3 +26,16 @@ if (!function_exists('getMaritalStatus')) {
         return $status;
     }
 }
+
+if (!function_exists('getStudentStageStatus')) {
+    function getStudentStageStatus($key = null)
+    {
+        $stages = ['applicant' => 'applicant', 'student' => 'student', 'alumni' => 'alumni'];
+        if (!is_null($key) && isset($stages[$key]))
+            return $stages[$key];
+        else
+            return null;
+
+        return $stages;
+    }
+}

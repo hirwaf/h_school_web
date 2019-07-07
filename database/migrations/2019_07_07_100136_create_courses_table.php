@@ -19,7 +19,6 @@ class CreateCoursesTable extends Migration
                 $table->string('name')->nullable();
                 $table->string('code')->nullable();
                 $table->string('lecturer');
-                $table->string('department');
                 $table->timestamps();
                 $table->softDeletes();
             });
