@@ -19,3 +19,10 @@
 Route::group(['prefix' => '/'], function () {
     Voyager::routes();
 });
+
+Route::group(['middleware' => 'pageview', 'prefix' => 'app'], function () {
+    Route::get("/application", "AppController@application")->name('student.application');
+    Route::post('/application', "AppController@submitApplication")->name('student.submit.application');
+
+    Route::get('ajax/get/department', "AppController@getDepartment")->name('ajax.get.department');
+});
