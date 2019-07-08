@@ -35,3 +35,12 @@ Route::group(['prefix' => 'v1/auth', 'namespace' => 'Api'], function () {
         });
     });
 });
+
+Route::group(['prefix' => 'v1/app', 'namespace' => 'Api'], function () {
+    Route::group(['prefix' => 'student', 'middleware' => ['assign.guard:students', 'auth:students']], function () {
+        Route::get('/{std_id}/notification', "StudentsController@notification");
+        Route::get('/{std_id}/reports', "StudentsController@reports");
+        Route::get('/{std_id}/register', "StudentsController@register");
+        Route::get('/{std_id}/information', "StudentsController@information");
+    });
+});

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Course;
 use App\Http\Controllers\Controller;
 use App\Student;
 use Carbon\Carbon;
@@ -88,5 +89,64 @@ class StudentsController extends Controller
             'year' => $student->year_of_study
         ])->toArray();
         return response()->json($arr);
+    }
+
+    /**
+     * @param $std_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function notification($std_id)
+    {
+        $student = Student::where('std_id', $std_id)->first();
+        if ($student) {
+            $personal = $student->notifications()->orderBy('created_at', 'desc')->get();
+            $general = $student->department->notifications()->orderBy('created_at', 'desc')->get();
+            return view('app.students.notification', compact('personal', 'general'));
+        }
+    }
+
+    /**
+     * @param $std_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function reports($std_id)
+    {
+        $student = Student::where('std_id', $std_id)->first();
+        if ($student) {
+            $attendances = $student->attendances()->orderBy('created_at', 'desc')->get();
+            return view('app.students.report', compact('attendances', 'student'));
+        }
+    }
+
+    /**
+     * @param $std_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function register($std_id)
+    {
+        if (!setting('site.registration_window'))
+            return view('app.students.register_disabled');
+
+        $student = Student::where('std_id', $std_id)->first();
+        $courses = Course::where('year_of_study', (int) $student->year_of_study + 1)
+            ->where('department_id', $student->department_id)
+            ->orderBy('semester', 'asc')
+            ->get();
+
+        if ($student) {
+            return view('app.students.register', compact('student', 'courses'));
+        }
+    }
+
+    /**
+     * @param $std_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function information($std_id)
+    {
+        $student = Student::where('std_id', $std_id)->first();
+        if ($student) {
+            return view('app.students.information', compact('student'));
+        }
     }
 }

@@ -20,5 +20,9 @@ class Notification extends Model
         return $this->belongsTo(Student::class, 'std_id', 'std_id');
     }
 
+    public function lecturer()
+    {
+        return $this->belongsTo(Lecturer::class, 'lecturer_id', 'id');
+    }
 
 }
