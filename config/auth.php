@@ -41,8 +41,20 @@ return [
             'provider' => 'users',
         ],
 
+        'students' => [
+            'driver' => 'passport',
+            'provider' => 'students',
+            'hash' => false,
+        ],
+
+        'lecturers' => [
+            'driver' => 'passport',
+            'provider' => 'lecturers',
+            'hash' => false,
+        ],
+
         'api' => [
-            'driver' => 'token',
+            'driver' => 'passport',
             'provider' => 'users',
             'hash' => false,
         ],
@@ -71,6 +83,16 @@ return [
             'model' => App\User::class,
         ],
 
+        'students' => [
+            'driver' => 'eloquent',
+            'model' => App\Student::class,
+        ],
+
+        'lecturers' => [
+            'driver' => 'eloquent',
+            'model' => App\Lecturer::class,
+        ],
+
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',
@@ -95,6 +117,18 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
+            'table' => 'password_resets',
+            'expire' => 60,
+        ],
+
+        'students' => [
+            'provider' => 'students',
+            'table' => 'password_resets',
+            'expire' => 60,
+        ],
+
+        'lecturers' => [
+            'provider' => 'lecturers',
             'table' => 'password_resets',
             'expire' => 60,
         ],

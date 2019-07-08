@@ -16,3 +16,22 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::group(['prefix' => 'v1/auth', 'namespace' => 'Api'], function () {
+    Route::group(['prefix' => 'lecturer', 'middleware' => ['assign.guard:lecturers']], function () {
+        Route::post('login', 'LecturersController@login');
+        Route::group(['middleware' => 'auth:lecturers'], function () {
+            Route::get('logout', 'LecturersController@logout');
+            Route::get('/user', function (Request $request) {
+                return $request->user();
+            });
+        });
+    });
+    Route::group(['prefix' => 'student', 'middleware' => ['assign.guard:students']], function () {
+        Route::post('login', 'StudentsController@login');
+        Route::group(['middleware' => ['assign.guard:students', 'auth:students']], function () {
+            Route::get('logout', 'StudentsController@logout');
+            Route::get('/user', "StudentsController@user");
+        });
+    });
+});

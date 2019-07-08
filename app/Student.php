@@ -3,11 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Passport\HasApiTokens;
 
 class Student extends Authenticatable
 {
+    use HasApiTokens;
     use Notifiable;
 
     protected $fillable = [
@@ -39,7 +41,7 @@ class Student extends Authenticatable
 
     public function attendances()
     {
-        return $this->hasMany(CourseAttendance::class,'std_id', 'std_id');
+        return $this->hasMany(CourseAttendance::class, 'std_id', 'std_id');
     }
 
     public function getYearOfStudyAttribute()
@@ -50,5 +52,10 @@ class Student extends Authenticatable
             return $registered->year_of_study;
 
         return 1;
+    }
+
+    public function getNameAttribute()
+    {
+        return ucwords($this->surname . " " . $this->other_name);
     }
 }
