@@ -44,7 +44,7 @@
         </div>
 
         <div class="form-group mt-2">
-            {!! Form::submit('Submit', ['class' => 'btn btn-primary btn-block']) !!}
+            {!! Form::submit('Register', ['class' => 'btn btn-primary btn-block']) !!}
         </div>
         {!! Form::close() !!}
     </div>
