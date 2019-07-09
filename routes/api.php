@@ -22,9 +22,7 @@ Route::group(['prefix' => 'v1/auth', 'namespace' => 'Api'], function () {
         Route::post('login', 'LecturersController@login');
         Route::group(['middleware' => 'auth:lecturers'], function () {
             Route::get('logout', 'LecturersController@logout');
-            Route::get('/user', function (Request $request) {
-                return $request->user();
-            });
+            Route::get('/user', "LecturersController@user");
         });
     });
     Route::group(['prefix' => 'student', 'middleware' => ['assign.guard:students']], function () {
