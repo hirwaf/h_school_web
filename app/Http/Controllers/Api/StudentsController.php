@@ -32,6 +32,10 @@ class StudentsController extends Controller
             $check = Hash::check($request->input('password'), $student->password);
             if ($check)
                 \auth('students')->setUser($student);
+            else
+                return response()->json([
+                    'message' => 'Incorrect credentials !!'
+                ], 401);
         }
 
         $user = $request->user();
