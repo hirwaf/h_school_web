@@ -43,4 +43,9 @@ Route::group(['prefix' => 'v1/app', 'namespace' => 'Api'], function () {
         Route::get('/{std_id}/register', "StudentsController@register");
         Route::get('/{std_id}/information', "StudentsController@information");
     });
+
+    Route::group(['prefix' => 'lecturer', 'middleware' => ['assign.guard:lecturers', 'auth:lecturers']], function () {
+        Route::get('/{id}/courses', "LecturersController@getCourses");
+        Route::get('/students/{department}/{year}', "LecturersController@getStudents");
+    });
 });

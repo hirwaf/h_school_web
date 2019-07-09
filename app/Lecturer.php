@@ -5,9 +5,13 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Passport\HasApiTokens;
 
 class Lecturer extends Authenticatable
 {
+    use HasApiTokens;
+    use Notifiable;
+
     protected $fillable = [
         'names', 'telephone', 'email', 'gender', 'nationality', 'national_id', 'passport_number', 'password', 'status'
     ];
