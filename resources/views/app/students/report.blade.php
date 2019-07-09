@@ -22,7 +22,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td>Not Attendance ...</td>
+                        <td colspan="3">Not Attendance ...</td>
                     </tr>
                 @endforelse
                 </tbody>
